@@ -12,7 +12,7 @@ from rest_framework_simplejwt.views import (
 app_name = UsersConfig.name
 
 urlpatterns = [
-    #  user CreateReadUpdateDelete
+    #  user CreateReadUpdateDelete(CRUD)
     path('signup/', UserCreateAPIView.as_view(), name='user-register'),
     path('list/', UserListAPIView.as_view(), name='user-list'),
     path('update/<int:pk>/', UserUpdateAPIView.as_view(), name='user-update'),

@@ -6,9 +6,9 @@ NULLABLE = {'blank': True, 'null': True}
 
 class Habit(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='user', **NULLABLE)
-    action = models.CharField(max_length=300, verbose_name='action', **NULLABLE)
-    place = models.CharField(max_length=50, verbose_name='place of action', **NULLABLE)
-    time = models.DateTimeField(auto_now=False, auto_now_add=False, verbose_name='time of action', **NULLABLE)
+    action = models.CharField(max_length=300, verbose_name='action')
+    place = models.CharField(max_length=50, verbose_name='place of action')
+    time = models.DateTimeField(auto_now=False, auto_now_add=False, verbose_name='time of action')
 
     is_good = models.BooleanField(default=False, verbose_name='is good habit')
     related_habit = models.ForeignKey('Habit', on_delete=models.CASCADE, verbose_name='related habit', **NULLABLE)
