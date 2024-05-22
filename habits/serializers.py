@@ -10,13 +10,15 @@ class HabitSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         """
-        check if field is_good is true can add only field related_habit
-        if field is_good is false user can add only field reward
+        1 if) check time_to_complete field should be less than 120 sec
+
+        2 if) check if field is_good is true can add only field related_habit
+        3 if) if field is_good is false user can add only field reward
         """
-        if data['is_good']:
-            if data['reward']:
-                raise serializers.ValidationError({'reward': 'Change habit to is good to add reward'})
-        elif not data['is_good']:
-            if data['related_habit']:
-                raise serializers.ValidationError({'related_habit': 'Change habit to is not good to add related_habit'})
+        if data['time_to_complete'] > 120:
+            raise serializers.ValidationError({'time_to_complete': 'lead time should be less than 120'})
+
+        if data['related_habit'].is_good is False:
+            raise serializers.ValidationError({'related_habit': 'only good habits can be related_habit'})
+        print(data)
         return data
