@@ -1,7 +1,7 @@
 from rest_framework import generics
 
 from habits.models import Habit
-from habits.serializers import HabitSerializer
+from habits.serializers import HabitSerializer, HabitCreateSerializer
 
 
 class HabitListAPIView(generics.ListAPIView):
@@ -11,7 +11,7 @@ class HabitListAPIView(generics.ListAPIView):
 
 class HabitCreateAPIView(generics.CreateAPIView):
     queryset = Habit.objects.all()
-    serializer_class = HabitSerializer
+    serializer_class = HabitCreateSerializer
 
 
 class HabitUpdateAPIView(generics.UpdateAPIView):

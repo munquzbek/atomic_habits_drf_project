@@ -8,17 +8,31 @@ class HabitSerializer(serializers.ModelSerializer):
         model = Habit
         fields = '__all__'
 
+
+class HabitCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Habit
+        fields = '__all__'
+
     def validate(self, data):
         """
         1 if) check time_to_complete field should be less than 120 sec
-
-        2 if) check if field is_good is true can add only field related_habit
-        3 if) if field is_good is false user can add only field reward
+        2 if) check that related_habit can only be with is_good field
+        3 if) check period field can be 1-7
         """
-        if data['time_to_complete'] > 120:
-            raise serializers.ValidationError({'time_to_complete': 'lead time should be less than 120'})
+        for d in data:
+            if 'time_to_complete' == d:
+                if data['time_to_complete'] > 120:
+                    raise serializers.ValidationError({'time_to_complete': 'lead time should be less or equal 120'})
 
-        if data['related_habit'].is_good is False:
-            raise serializers.ValidationError({'related_habit': 'only good habits can be related_habit'})
+            if 'related_habit' == d:
+                if data['related_habit'].is_good is False:
+                    raise serializers.ValidationError({'related_habit': 'only good habits can be related_habit'})
+
+            if 'period' == d:
+                if data['period'] == 0 or data['period'] > 7:
+                    raise serializers.ValidationError({'period': 'period should repeat at least 1 times in week '
+                                                                 'or everyday during the week'})
+
         print(data)
         return data

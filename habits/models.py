@@ -23,10 +23,16 @@ class Habit(models.Model):
     is_published = models.BooleanField(default=False, verbose_name='is published')
 
     def save(self, *args, **kwargs):
+        """
+        1. if is_good is true you cant add related_habit and reward
+        2. check that object can have only one field related_habit or reward
+        """
+        if self.is_good and (self.related_habit or self.reward):
+            raise serializers.ValidationError(
+                {'is_good': 'if is_good field is True you cant fill reward and related_habit'})
+
         if self.related_habit is not None and self.reward is not None:
             raise serializers.ValidationError('Need to fill only one field related_habit or reward')
-        if self.related_habit is None and self.reward is None:
-            raise serializers.ValidationError('Need to fill at least one field related_habit or reward')
 
         return super().save()
 
