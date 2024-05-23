@@ -2,6 +2,7 @@ from rest_framework import generics, request
 
 from habits.models import Habit
 from habits.paginators import HabitPaginator
+from habits.permissions import IsOwner
 from habits.serializers import HabitSerializer, HabitCreateSerializer
 
 
@@ -33,7 +34,9 @@ class HabitCreateAPIView(generics.CreateAPIView):
 class HabitUpdateAPIView(generics.UpdateAPIView):
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
+    permission_classes = [IsOwner]
 
 
 class HabitDeleteAPIView(generics.DestroyAPIView):
     queryset = Habit.objects.all()
+    permission_classes = [IsOwner]
