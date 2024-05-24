@@ -34,5 +34,4 @@ class HabitCreateSerializer(serializers.ModelSerializer):
                     raise serializers.ValidationError({'period': 'period should repeat at least 1 times in week '
                                                                  'or everyday during the week'})
 
-        print(data)
         return data

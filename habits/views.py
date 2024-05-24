@@ -1,4 +1,4 @@
-from rest_framework import generics, request
+from rest_framework import generics
 
 from habits.models import Habit
 from habits.paginators import HabitPaginator

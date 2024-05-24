@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_celery_beat',
 
     'users',
     'habits',
@@ -136,4 +137,20 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
+
+# celery configurations
+# CELERY_TIMEZONE = "Australia/Tasmania"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+# urls for redis broker to work with celery
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+
+# scheduler
+CELERY_BEAT_SCHEDULE = {
+    "start_checking_login_time": {
+        "task": "habits.tasks.send_notifications",
+        "schedule": timedelta(days=1),
+    },
 }
