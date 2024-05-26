@@ -11,7 +11,7 @@ tb = telebot.TeleBot(TOKEN)
 
 day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
-# tb.send_message(426795208, 'haha loh')
+# tb.send_message(426795208, 'some message')
 
 
 @shared_task
